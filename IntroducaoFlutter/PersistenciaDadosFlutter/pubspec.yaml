@@ -1,0 +1,20 @@
+name: introducao_flutter
+description: A new Flutter project for learning persistence with SQLite and SharedPreferences.
+
+# The following defines the Flutter SDK version constraints.
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
+  shared_preferences: ^2.0.15
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
