@@ -1,37 +1,41 @@
-// formulario para adicionar novo pet
+//formulario para adiconar novo pet
 
 import 'package:flutter/material.dart';
+import 'package:sapetshop/controllers/pets_controller.dart';
+import 'package:sapetshop/models/pet_model.dart';
+import 'package:sapetshop/screens/home_screen.dart';
 
-class AddPetScreen extends StatefulWidget{
+class AddPetScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _AddPetScreenState();
-  }
+  State<AddPetScreen> createState() => _AddPetScreenState();
+}
 
- class _AddPetScreenState extends State<AddPetScreen>{
-   final _formKey = GlobalKey<FormState>(); //chave para o formulário
-   final _petsController = PetsController();
+class _AddPetScreenState extends State<AddPetScreen> {
+  final _formKey = GlobalKey<FormState>(); //chave para o Formulário
+  final _petsController = PetsController();
 
    String _nome = "";
    String _raca = "";
    String _nomeDono = "";
    String _telefoneDono = "";
 
-   Future<void> _salvarPet() async {
-    if(_formKey.currentState!.validate()){
-      _formKey.currentState!.save();
-      final newPet = Pet(
+  Future<void> _salvarPet() async {
+    if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        final newPet = Pet(
         nome: _nome,
         raca: _raca,
         nomeDono: _nomeDono,
-        telefoneDono: _telefoneDono);
+        telefoneDono: _telefoneDono,
+      );
 
-        //mando para o banco
-        await _petsController.addPet(newPet);
-        Navigator.pop(context); //Retorna para a Tela Anterior
+      //mando para o banco
+      await _petsController.addPet(newPet);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())); //Retorna para a Tela Anterior
     }
-   }
+  }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
@@ -44,24 +48,25 @@ class AddPetScreen extends StatefulWidget{
             children: [
               TextFormField(
                 decoration: InputDecoration(labelText: "Nome do Pet"),
-                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null ,
+                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null,
                 onSaved: (value) => _nome = value!,
-          ),
+              ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Raça do Pet"),
-                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null ,
-                onSaved: (value) => _nome = value!,
-          ),
+                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null,
+                onSaved: (value) => _raca = value!,
+              ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Nome do Dono"),
-                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null ,
-                onSaved: (value) => _nome = value!,
-          ),
+                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null,
+                onSaved: (value) => _nomeDono = value!,
+              ),
               TextFormField(
-                decoration: InputDecoration(labelText: "Telefone do Dono"),
-                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null ,
-                onSaved: (value) => _nome = value!,
-          ),
+                decoration: InputDecoration(labelText: "Telefone"),
+                validator: (value) => value!.isEmpty ? "Campo não Preenchido!!!" : null,
+                onSaved: (value) => _telefoneDono = value!,
+              ),
+              ElevatedButton(onPressed: _salvarPet, child: Text("Salvar"))
 
             ],
           )),
@@ -69,3 +74,4 @@ class AddPetScreen extends StatefulWidget{
     );
   }
 }
+

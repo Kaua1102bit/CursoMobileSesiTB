@@ -10,7 +10,7 @@ class PetsController {
     return await _dbHelper.insertPet(pet);
   }
 
-  Future<List<pet>> fetchPets() async {
+  Future<List<Pet>> fetchPets() async {
     return await _dbHelper.getPets();
   }
 
