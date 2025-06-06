@@ -1,5 +1,7 @@
 //formulario para adiconar novo pet
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:sapetshop/controllers/pets_controller.dart';
 import 'package:sapetshop/models/pet_model.dart';
@@ -30,13 +32,21 @@ class _AddPetScreenState extends State<AddPetScreen> {
       );
 
       //mando para o banco
-      await _petsController.addPet(newPet);
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())); //Retorna para a Tela Anterior
+      try {
+        await _petsController.addPet(newPet);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())); //Retorna para a Tela Anterior
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Exception: $e"),
+          ),
+        );
+      }
     }
   }
-
-  @override
-  Widget build(BuildContext context) {
+  
+    @override
+    Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(title: Text("Novo Pet"),),

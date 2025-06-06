@@ -1,4 +1,5 @@
 class Pet {
+  
   final int? id; //ID gerado pelo BD, pode ser null na criação do obj
   final String nome;
   final String raca;

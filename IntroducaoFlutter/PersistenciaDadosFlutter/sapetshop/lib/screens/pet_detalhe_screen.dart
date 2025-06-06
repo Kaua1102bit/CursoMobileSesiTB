@@ -36,10 +36,10 @@ class _PetDetalheScreenState extends State<PetDetalheScreen> { //build da tela
     _loadPetConsultas();
   }
 
-  Future<void> _loadPetConsultas(){
-    setState(() {
+  Future<void> _loadPetConsultas()async {
+    setState(() async {
       try {
-        _pet = await _controllerPets.findPetById(widget.petId);
+        pet = await _controllerPets.findPetById(widget.petId);
       _consultas = await _controllerConsultas.getConsultasByPet(widget.petId);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -63,7 +63,7 @@ class _PetDetalheScreenState extends State<PetDetalheScreen> { //build da tela
       body:  _isLoading
           ? Center(child: CircularProgressIndicator(),)
           : _consultas.length == 0 // senão tiver pet criado -- erro 
-          ?Center(child: Text("Erro ao carregar o pet"),)
+          ? const Center(child: Text("Erro ao carregar o pet"),)
           :Padding( // constroí as info do pet
             padding: EdgeInsets.all(16),
             child: Column(

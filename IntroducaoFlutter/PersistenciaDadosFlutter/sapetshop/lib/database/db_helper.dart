@@ -42,15 +42,21 @@ class PetShopDBHelper{
             nome TEXT NOT NULL,
             raca TEXT NOT NULL,
             nome_dono TEXT NOT NULL,
-            telefone_dono TEXT NOT NULL);
+            telefone_dono TEXT NOT NULL
+            )
+            """);
+           print("banco pets criado");
+
+            // cria a tabela consultas
+        await db.execute( '''
             CREATE TABLE IF NOT EXISTS consultas(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             pet_id INTEGER NOT NULL,
             data_hora TEXT NOT NULL,
             tipo_servico TEXT NOT NULL,
             observacoes TEXT NOT NULL,
-            FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE)"""
-        );
+            FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE
+        ''');
       },
     );
   }
