@@ -5,11 +5,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sapetshop/controllers/viagens_controller.dart';
 import 'package:sapetshop/models/viagem_model.dart';
-import 'package:sapetshop/screens/home_screen.dart';
+import 'package:sapetshop/screens/home_screen.dart'; 
 
 class AddViagemScreen extends StatefulWidget {
+  final Viagem? viagem;
+  AddViagemScreen({this.viagem});
+
   @override
-  State<AddViagemScreen> createState() => _AddViagemScreenState();
+  State<AddViagemScreen> createState() => _AddViagemScreenState(); // Estado do formulário de adição de viagem
 }
  
 class _AddViagemScreenState extends State<AddViagemScreen> {
@@ -21,6 +24,18 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
    String _descricao = "";
    DateTime _dataInicio = DateTime.now();
    DateTime _dataFim = DateTime.now();
+
+   @override
+   void initState() {
+     super.initState();
+     if (widget.viagem != null) {
+       _titulo = widget.viagem!.titulo;
+       _destino = widget.viagem!.destino;
+       _descricao = widget.viagem!.descricao;
+       _dataInicio = widget.viagem!.dataInicio;
+       _dataFim = widget.viagem!.dataFim;
+     }
+   }
 
   Future<void> _selecionarDataInicio(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -54,6 +69,7 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final novaViagem = Viagem(
+        id: widget.viagem?.id,
         titulo: _titulo,
         destino: _destino,
         dataInicio: _dataInicio,
@@ -61,8 +77,12 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
         descricao: _descricao,
       );
       try {
-        await _viagensController.addViagem(novaViagem);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        if (widget.viagem == null) {
+          await _viagensController.addViagem(novaViagem);
+        } else {
+          await _viagensController.updateViagem(novaViagem);
+        }
+        Navigator.pop(context);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Exception: $e")),
@@ -74,7 +94,7 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Nova Viagem")),
+      appBar: AppBar(title: Text(widget.viagem == null ? "Nova Viagem" : "Editar Viagem")),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -82,18 +102,20 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
           child: ListView(
             children: [
               Text(
-                "Planeje sua próxima viagem",
+                widget.viagem == null ? "Planeje sua próxima viagem" : "Edite sua viagem",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blue.shade700),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
               TextFormField(
+                initialValue: _titulo,
                 decoration: InputDecoration(labelText: "Título da Viagem", prefixIcon: Icon(Icons.title)),
                 validator: (value) => value!.isEmpty ? "Campo obrigatório" : null,
                 onSaved: (value) => _titulo = value!,
               ),
               const SizedBox(height: 16),
               TextFormField(
+                initialValue: _destino,
                 decoration: InputDecoration(labelText: "Destino", prefixIcon: Icon(Icons.place)),
                 validator: (value) => value!.isEmpty ? "Campo obrigatório" : null,
                 onSaved: (value) => _destino = value!,
@@ -121,6 +143,7 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                initialValue: _descricao,
                 decoration: InputDecoration(labelText: "Descrição", prefixIcon: Icon(Icons.description)),
                 maxLines: 3,
                 onSaved: (value) => _descricao = value!,
@@ -129,7 +152,7 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
               ElevatedButton.icon(
                 onPressed: _salvarViagem,
                 icon: Icon(Icons.save),
-                label: Text("Salvar"),
+                label: Text(widget.viagem == null ? "Salvar" : "Atualizar"),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(double.infinity, 48),
                 ),

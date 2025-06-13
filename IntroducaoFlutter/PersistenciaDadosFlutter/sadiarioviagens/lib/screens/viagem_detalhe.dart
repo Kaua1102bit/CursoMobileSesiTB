@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sapetshop/controllers/consultas_controller.dart';
 import 'package:sapetshop/models/consulta_model.dart';
-import 'package:sapetshop/screens/pet_detalhe_screen.dart';
+import 'package:sapetshop/screens/viagem_detalhe_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -111,7 +111,7 @@ class _AddEntradaScreenState extends State<AddEntradaScreen> {
               const SizedBox(height: 16),
               Row(
                 children: [
-                  ElevatedButton.icon(
+                  ElevatedButton.icon( // Botão para selecionar foto
                     onPressed: _selecionarFoto,
                     icon: Icon(Icons.photo),
                     label: Text("Selecionar Foto"),

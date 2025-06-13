@@ -1,5 +1,4 @@
 import 'package:sapetshop/database/db_helper.dart';
-import 'package:sapetshop/models/pet_model.dart';
 import 'package:sapetshop/models/viagem_model.dart';
 
 class ViagensController {
@@ -19,5 +18,9 @@ class ViagensController {
 
   Future<int> deleteViagem(int id) async {
     return await _dbHelper.deleteViagem(id);
+  }
+
+  Future<int> updateViagem(Viagem viagem) async {
+    return await _dbHelper.updateViagem(viagem);
   }
 }

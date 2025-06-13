@@ -4,7 +4,9 @@ import 'package:sapetshop/controllers/viagens_controller.dart';
 import 'package:sapetshop/controllers/consultas_controller.dart';
 import 'package:sapetshop/models/viagem_model.dart';
 import 'package:sapetshop/models/consulta_model.dart';
-import 'package:sapetshop/screens/add_consulta_screen.dart';
+import 'dart:io';
+
+import 'package:sapetshop/screens/viagem_detalhe.dart';
 
 class ViagemDetalheScreen extends StatefulWidget {
   final int viagemId;
@@ -44,6 +46,91 @@ class _ViagemDetalheScreenState extends State<ViagemDetalheScreen> {
     }
   }
 
+  Widget _buildLinhaDoTempo() {
+    if (_entradas.isEmpty) {
+      return const Center(child: Text("Nenhuma entrada cadastrada"));
+    }
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _entradas.length,
+        itemBuilder: (context, index) {
+          final entrada = _entradas[index];
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start, // Alinha os itens no topo
+            children: [
+              // Linha vertical da timeline
+              Column(
+                children: [
+                  Container(
+                    width: 2,
+                    height: index == 0 ? 30 : 60,
+                    color: index == 0 ? Colors.transparent : Colors.blue.shade200,
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.blue.shade100,
+                    child: Text(
+                      "${entrada.data.day}",
+                      style: TextStyle(color: Colors.blue.shade800, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    width: 2,
+                    height: 60,
+                    color: index == _entradas.length - 1 ? Colors.transparent : Colors.blue.shade200,
+                  ),
+                ],
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Card( // Card para cada entrada
+                  margin: const EdgeInsets.symmetric(vertical: 12),
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${entrada.data.day}/${entrada.data.month}/${entrada.data.year}",
+                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade700),
+                        ),
+                        if (entrada.fotoPath != null && entrada.fotoPath!.isNotEmpty)
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: FileImage(File(entrada.fotoPath!)),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        Text(
+                          entrada.texto,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: IconButton(
+                            onPressed: () => _deleteEntrada(entrada.id!),
+                            icon: Icon(Icons.delete, color: Colors.red[300]),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,31 +144,15 @@ class _ViagemDetalheScreenState extends State<ViagemDetalheScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Título: ${viagem!.titulo}"),
-                      Text("Destino: ${viagem!.destino}"),
+                      Text("Título: ${viagem!.titulo}", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text("Destino: ${viagem!.destino}", style: TextStyle(fontSize: 16)),
                       Text("Início: ${viagem!.dataInicio.day}/${viagem!.dataInicio.month}/${viagem!.dataInicio.year}"),
                       Text("Fim: ${viagem!.dataFim.day}/${viagem!.dataFim.month}/${viagem!.dataFim.year}"),
                       Text("Descrição: ${viagem!.descricao}"),
                       Divider(),
-                      Text("Entradas Diárias:"),
-                      _entradas.isEmpty
-                          ? Center(child: Text("Nenhuma entrada cadastrada"))
-                          : Expanded(
-                              child: ListView.builder(
-                                itemCount: _entradas.length,
-                                itemBuilder: (context, index) {
-                                  final entrada = _entradas[index];
-                                  return ListTile(
-                                    title: Text(entrada.texto),
-                                    subtitle: Text("${entrada.data.day}/${entrada.data.month}/${entrada.data.year}"),
-                                    trailing: IconButton(
-                                      onPressed: () => _deleteEntrada(entrada.id!),
-                                      icon: Icon(Icons.delete),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
+                      Text("Linha do Tempo das Entradas Diárias:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      _buildLinhaDoTempo(),
                     ],
                   ),
                 ),
@@ -89,7 +160,8 @@ class _ViagemDetalheScreenState extends State<ViagemDetalheScreen> {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AddEntradaScreen(viagemId: widget.viagemId)),
-        ),
+        ).then((_) => _loadViagemEntradas()),
+        child: Icon(Icons.add),
       ),
     );
   }

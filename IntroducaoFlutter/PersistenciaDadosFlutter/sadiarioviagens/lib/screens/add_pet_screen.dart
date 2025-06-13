@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sapetshop/controllers/pets_controller.dart';
-import 'package:sapetshop/models/pet_model.dart';
 import 'package:sapetshop/models/viagem_model.dart';
 import 'package:sapetshop/screens/home_screen.dart';
 
@@ -105,9 +104,10 @@ class _AddViagemScreenState extends State<AddViagemScreen> {
               Row(
                 children: [
                   Expanded(child: Text("Fim: ${_dataFim.day}/${_dataFim.month}/${_dataFim.year}")),
-                  TextButton(
+                  TextButton.icon(
                     onPressed: () => _selecionarDataFim(context),
-                    child: Text("Selecionar"),
+                    icon: Icon(Icons.flag),
+                    label: Text("Selecionar"),
                   ),
                 ],
               ),

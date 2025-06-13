@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class Viagem {
   final int? id;
   final String titulo;
-  final String destino;
+  final String destino; 
   final DateTime data_inicio;
   final DateTime data_fim;
 

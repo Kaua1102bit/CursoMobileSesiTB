@@ -4,7 +4,7 @@ import 'package:sapetshop/controllers/viagens_controller.dart';
 import 'package:sapetshop/controllers/consultas_controller.dart';
 import 'package:sapetshop/models/viagem_model.dart';
 import 'package:sapetshop/models/consulta_model.dart';
-import 'package:sapetshop/screens/add_consulta_screen.dart';
+import 'package:sapetshop/screens/viagem_detalhe.dart';
 import 'dart:io';
 
 class ViagemDetalheScreen extends StatefulWidget {

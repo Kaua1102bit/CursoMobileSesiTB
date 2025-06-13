@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sapetshop/models/consulta_model.dart';
-import 'package:sapetshop/models/pet_model.dart';
 import 'package:sapetshop/models/viagem_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -57,6 +56,16 @@ class DiarioViagemDBHelper {
   Future<int> insertViagem(Viagem viagem) async {
     final db = await database;
     return await db.insert("viagens", viagem.toMap());
+  }
+
+  Future<int> updateViagem(Viagem viagem) async {
+    final db = await database;
+    return await db.update(
+      "viagens",
+      viagem.toMap(),
+      where: "id = ?",
+      whereArgs: [viagem.id],
+    );
   }
 
   Future<List<Viagem>> getViagens() async {
