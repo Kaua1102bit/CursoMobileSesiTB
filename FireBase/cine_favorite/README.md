@@ -1,36 +1,36 @@
 # CineFavorite (Formativa)
 
-### Briefing
-Construir um Aplicativo do Zero - O CineFavorite que permitirá criar uma conta e buscar filmes em uma API, montar uma galeria pessoal de filmes favoritos, com poster (capa) e nota avaliativa do usuário para o filme.
+## Briefing
+Construir um Aplicativo do Zero - O CineFavorite que permitirá criar uma conte e buscar filmes em uma API, montar uma galeria pessoal de filmes favoritos, com poster(capa) e nota avaliativa do usuário para o filme.
 
 ## Objetivos
 - Criar uma Galeria Personalizada por Usuário de Filmes Favoritos
-- Buscar Filmes em uma API e Listar para Selecionar Filmes Favoritos
+- Buscar Filmes em uma API e Listar para selecionar filmes favoritos
 - Criação de Contas por Usuário
-- listar Filmes por Palavra-Chave
+- Listar filmes por Palavra-Chave
 
-## Levantamento de Requisitos
-- ### Requisitos Funcionais
-- ### Requisitos Não-Funcionais
+## Levantamento de Requistos
+- ### Funcionais
+- ### Não Funcionais
 
-## Recursos do projeto
+## Recurso do Projeto
 - Linguagem de Programação: Flutter/Dart
-- API TMDB : Base de Dados para Filmes
-- Figma para Prototipagem
-- GitHub para Armazenamento e Versionamento do Código 
+- API TMDB: Base de Dados para Filmes
+- Figma: Prototipagem
+- GitHub: para Armazenamento e Versionamento do Código
 - FireBase: Authentication / FireStore DB
-- VScode: Codificação / Teste
+- VsCode: Codificação / Teste
 
 ## Diagramas
-1. ### Classe:
-Demonstrar o Funcionamento das Entidades do Sistema
-- Usuário (user): Classe já Modelada pelo FireBaseAuth
+1. ### Classe: 
+Demosntrar o Funcionamento das Entidades do Sistema
+- Usuário (User): Classe já modelada pelo FireBaseAuth
     - Atributos: email, senha, uid
     - Métodos: login, registrar, logout
 
-- Filmes Favoritos (movie): Classe Modelada pelo DEV - baseada na API TMDB
+- Filmes Favoritos (Movie): Classe Modelada pelo DEV - Baseada na API TMDB
     - Atributos: id, título, PosterPath, Nota
-    - Métodos: Adicionar, Remover, Listar e AtualizarNota (CRUD)
+    - Métodos: Adicionar, remover, listar, atualizatNota (CRUD)
 
 ```mermaid
 
@@ -45,7 +45,7 @@ classDiagram
         +register()
     }
 
-    class Movie {
+    class Movie{
         +int id
         +String title
         +String posterPath
@@ -62,8 +62,8 @@ classDiagram
 
 2. ### Uso
 Ação que os Atores podem Fazer
-- Usuário: 
-    - Registrar
+- Usuário:
+    - Registar
     - Login
     - Logout
     - Procurar Filmes na API
@@ -72,29 +72,28 @@ Ação que os Atores podem Fazer
     - Remover Filmes dos Favoritos
 
 ```mermaid
-
 graph TD
     subgraph "Ações"
-    ac1([registrar])
-    ac2([login])
-    ac3([logout])
-    ac4([SearchMovie])
-    ac5([AddFavoriteMovie])
-    ac6([UpdateMovieRating])
-    ac7([RemoveFavoriteMovie])
-end
+        ac1([Registrar])
+        ac2([Login])
+        ac3([Logout])
+        ac4([SearchMovies])
+        ac5([AddFavoriteMovie])
+        ac6([UpdateMovieRating])
+        ac7([RemoveFavoriteMovie])
+    end
 
-user([Usuário])
+    user([Usuário])
 
-user --> ac1
-user --> ac2
+    user --> ac1
+    user --> ac2
 
-ac1 --> ac2
-ac2 --> ac3
-ac2 --> ac4
-ac2 --> ac5
-ac2 --> ac6
-ac2 --> ac7
+    ac1 --> ac2
+    ac2 --> ac3
+    ac2 --> ac4
+    ac2 --> ac5
+    ac2 --> ac6
+    ac2 --> ac7
 
 ```
 
@@ -108,11 +107,12 @@ Determinar o Caminho Percorrido pelo Ator para executar uma Ação
     A[Início] --> B{Tela de Login}
     B --> C[Inserir Email e Senha]
     C --> D{Validar as Credenciais}
-    D --> Sim --> G[FavoriteView]
+    D --> Sim --> G[Favorite View]
     D --> Não --> B
 
 ```
 
-## Prototipagem
+## Protopipagem
 
-Link dos Protótipos: 
+Link dos Protótipos
+
