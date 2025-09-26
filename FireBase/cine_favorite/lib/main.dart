@@ -24,6 +24,7 @@ void main() async{
 
 }
 
+// verificação se o usuário está ou não no sistema e direciona de acordo com a decisão
 class AuthStream extends StatelessWidget {
   const AuthStream({super.key});
 

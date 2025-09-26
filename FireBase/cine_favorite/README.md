@@ -114,5 +114,5 @@ Determinar o Caminho Percorrido pelo Ator para executar uma Ação
 
 ## Protopipagem
 
-Link dos Protótipos
+Link dos Protótipos: https://www.figma.com/proto/7r5OG69Ysz8X1KYVyE7KxF/Untitled?node-id=0-1&t=BJ8Zy9DL0hbsdWAX-1
 
