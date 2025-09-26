@@ -29,7 +29,7 @@ class Movie {
 
   //fromMap Json=>OBJ
   // fabricando um OBJ a partir da coleção
-  factory Movie.fromMap(Map<String,dynamic> map){
+  factory Movie.fromMap(Map<String,dynamic> map, String id){
     return Movie(
       id: map["id"], 
       title: map["title"], 

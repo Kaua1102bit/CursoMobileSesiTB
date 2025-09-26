@@ -18,17 +18,18 @@ class MovieFirestoreController {
 
   //método para pegar os filmes da coleção de favoritos
   //Stream => criar um ouvinte(listener => pegar a lista de favoritos, sempre que for modificada
-  Stream<List<Movie>> getFavoriteMovies() {//lista salva no FireStore
-    if(currentUser == null) return Stream.value([]); // retrona a lista vazia caso usuário seja null
+  Stream<List<Movie>> getFavoriteMovies() {
+  if (currentUser == null) return Stream.value([]);
 
-    return _db
-    .collection("usuarios")
-    .doc(currentUser!.uid)
-    .collection("favorite_movies")
-    .snapshots()
-    .map((snapshot) => snapshot.docs.map((doc)=>Movie.fromMap(doc.data())).toList());
-    //retorna a coleção que estava em Json => convertida para Obj de uma Lista de Filmes
-  }
+  return _db
+      .collection("usuarios")
+      .doc(currentUser!.uid)
+      .collection("favorite_movies")
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Movie.fromMap(doc.data(), doc.id)).toList());
+}
+
 
   //path e path_provider (bibliotecas que permitem acesso as pastas do dispositivo)
   //adicionar um filme a lista de favoritos
@@ -86,4 +87,20 @@ class MovieFirestoreController {
     .update({"rating":rating});
   }
 
+  // aqui implementei de verdade 👇
+  Future<void> deleteFavoriteMovie(int id) async {
+    await _db
+        .collection("usuarios")
+        .doc(currentUser!.uid)
+        .collection("favorite_movies")
+        .doc(id.toString())
+        .delete();
+
+    // deletar imagem local também
+    final imgDir = await getApplicationDocumentsDirectory();
+    final file = File("${imgDir.path}/$id.jpg");
+    if (await file.exists()) {
+      await file.delete();
+    }
+  }
 }
