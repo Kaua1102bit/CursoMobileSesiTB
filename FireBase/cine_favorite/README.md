@@ -11,7 +11,18 @@ Construir um Aplicativo do Zero - O CineFavorite que permitirá criar uma conte 
 
 ## Levantamento de Requistos
 - ### Funcionais
+O sistema deve permitir que o usuário registre uma conta utilizando email e senha.
+
+O sistema deve permitir que o usuário faça login e logout.
+
+O sistema deve permitir que o usuário busque filmes na API TMDB por palavra-chave.
+
+O sistema deve permitir que o usuário adicione filmes à sua lista de favoritos.
+
+O sistema deve permitir que o usuário avalie (dar nota) e remova filmes dos favoritos.
+
 - ### Não Funcionais
+O sistema deve utilizar o Firebase Authentication e Firestore para autenticação e armazenamento seguro dos dados do usuário, garantindo persistência e escalabilidade.
 
 ## Recurso do Projeto
 - Linguagem de Programação: Flutter/Dart
