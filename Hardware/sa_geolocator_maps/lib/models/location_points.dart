@@ -6,8 +6,7 @@ class LocationPoints {
 
   //construtor
   LocationPoints({
-    required this.latitude, required this.longitude, required this.timeStamp,
+    required this.latitude, required this.longitude, required this.timeStamp
   });
-
   
 }
